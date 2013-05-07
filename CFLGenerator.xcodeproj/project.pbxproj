@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD52200F17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */; };
 		AD52201217392B9D00FAA2CE /* VLCoreUtilitiesLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */; };
 		AD52201517392F1800FAA2CE /* VLTransformationServiceVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201417392F1800FAA2CE /* VLTransformationServiceVendor.m */; };
 		AD5220191739360500FAA2CE /* VLAbstractLanguageAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220181739360500FAA2CE /* VLAbstractLanguageAdaptor.m */; };
@@ -28,8 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AD52200D17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyVarnerlabCoreUtilitiesLib.h; sourceTree = "<group>"; };
-		AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyVarnerlabCoreUtilitiesLib.m; sourceTree = "<group>"; };
 		AD52201017392B9D00FAA2CE /* VLCoreUtilitiesLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCoreUtilitiesLib.h; sourceTree = "<group>"; };
 		AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCoreUtilitiesLib.m; sourceTree = "<group>"; };
 		AD52201317392F1800FAA2CE /* VLTransformationServiceVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTransformationServiceVendor.h; sourceTree = "<group>"; };
@@ -182,8 +179,6 @@
 		AD672D74173904AD00302515 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				AD52200D17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.h */,
-				AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */,
 				AD672D75173904DE00302515 /* VLBlocksAndConstanStrings.h */,
 				AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */,
 				AD52201017392B9D00FAA2CE /* VLCoreUtilitiesLib.h */,
@@ -263,7 +258,6 @@
 				AD672D701739046E00302515 /* VLCodeGenerationFoundationServer.m in Sources */,
 				AD672D731739049400302515 /* VLCodeGenerationOperation.m in Sources */,
 				AD672D77173904DE00302515 /* VLBlocksAndConstanStrings.m in Sources */,
-				AD52200F17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m in Sources */,
 				AD52201217392B9D00FAA2CE /* VLCoreUtilitiesLib.m in Sources */,
 				AD52201517392F1800FAA2CE /* VLTransformationServiceVendor.m in Sources */,
 				AD5220191739360500FAA2CE /* VLAbstractLanguageAdaptor.m in Sources */,
