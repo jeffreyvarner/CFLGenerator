@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD52200F17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */; };
+		AD52201217392B9D00FAA2CE /* VLCoreUtilitiesLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */; };
+		AD52201517392F1800FAA2CE /* VLTransformationServiceVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201417392F1800FAA2CE /* VLTransformationServiceVendor.m */; };
+		AD5220191739360500FAA2CE /* VLAbstractLanguageAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220181739360500FAA2CE /* VLAbstractLanguageAdaptor.m */; };
+		AD52201C1739363300FAA2CE /* VLOctaveLanguageAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201B1739363300FAA2CE /* VLOctaveLanguageAdaptor.m */; };
+		AD52201F173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201E173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m */; };
+		AD52202217397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */; };
+		AD5220251739830900FAA2CE /* VLCFLMLToSTMVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */; };
 		AD672D4E1739040600302515 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD672D4D1739040600302515 /* Cocoa.framework */; };
 		AD672D581739040600302515 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD672D561739040600302515 /* InfoPlist.strings */; };
 		AD672D5A1739040600302515 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D591739040600302515 /* main.m */; };
@@ -14,9 +22,28 @@
 		AD672D611739040700302515 /* VLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D601739040700302515 /* VLDocument.m */; };
 		AD672D641739040700302515 /* VLDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD672D621739040700302515 /* VLDocument.xib */; };
 		AD672D671739040700302515 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD672D651739040700302515 /* MainMenu.xib */; };
+		AD672D701739046E00302515 /* VLCodeGenerationFoundationServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D6F1739046E00302515 /* VLCodeGenerationFoundationServer.m */; };
+		AD672D731739049400302515 /* VLCodeGenerationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D721739049400302515 /* VLCodeGenerationOperation.m */; };
+		AD672D77173904DE00302515 /* VLBlocksAndConstanStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD52200D17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyVarnerlabCoreUtilitiesLib.h; sourceTree = "<group>"; };
+		AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyVarnerlabCoreUtilitiesLib.m; sourceTree = "<group>"; };
+		AD52201017392B9D00FAA2CE /* VLCoreUtilitiesLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCoreUtilitiesLib.h; sourceTree = "<group>"; };
+		AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCoreUtilitiesLib.m; sourceTree = "<group>"; };
+		AD52201317392F1800FAA2CE /* VLTransformationServiceVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLTransformationServiceVendor.h; sourceTree = "<group>"; };
+		AD52201417392F1800FAA2CE /* VLTransformationServiceVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLTransformationServiceVendor.m; sourceTree = "<group>"; };
+		AD5220171739360500FAA2CE /* VLAbstractLanguageAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLAbstractLanguageAdaptor.h; sourceTree = "<group>"; };
+		AD5220181739360500FAA2CE /* VLAbstractLanguageAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLAbstractLanguageAdaptor.m; sourceTree = "<group>"; };
+		AD52201A1739363300FAA2CE /* VLOctaveLanguageAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLOctaveLanguageAdaptor.h; sourceTree = "<group>"; };
+		AD52201B1739363300FAA2CE /* VLOctaveLanguageAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLOctaveLanguageAdaptor.m; sourceTree = "<group>"; };
+		AD52201D173936CD00FAA2CE /* VLCFLMLToDataFileVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToDataFileVendor.h; sourceTree = "<group>"; };
+		AD52201E173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToDataFileVendor.m; sourceTree = "<group>"; };
+		AD52202017397B3A00FAA2CE /* VLCFLMLToKineticsVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToKineticsVendor.h; sourceTree = "<group>"; };
+		AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToKineticsVendor.m; sourceTree = "<group>"; };
+		AD5220231739830800FAA2CE /* VLCFLMLToSTMVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToSTMVendor.h; sourceTree = "<group>"; };
+		AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToSTMVendor.m; sourceTree = "<group>"; };
 		AD672D4A1739040600302515 /* CFLGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFLGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD672D4D1739040600302515 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD672D501739040600302515 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -31,6 +58,12 @@
 		AD672D601739040700302515 /* VLDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLDocument.m; sourceTree = "<group>"; };
 		AD672D631739040700302515 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VLDocument.xib; sourceTree = "<group>"; };
 		AD672D661739040700302515 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AD672D6E1739046E00302515 /* VLCodeGenerationFoundationServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCodeGenerationFoundationServer.h; sourceTree = "<group>"; };
+		AD672D6F1739046E00302515 /* VLCodeGenerationFoundationServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCodeGenerationFoundationServer.m; sourceTree = "<group>"; };
+		AD672D711739049400302515 /* VLCodeGenerationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCodeGenerationOperation.h; sourceTree = "<group>"; };
+		AD672D721739049400302515 /* VLCodeGenerationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCodeGenerationOperation.m; sourceTree = "<group>"; };
+		AD672D75173904DE00302515 /* VLBlocksAndConstanStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLBlocksAndConstanStrings.h; sourceTree = "<group>"; };
+		AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLBlocksAndConstanStrings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +78,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD52200C17392A0000FAA2CE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AD52201317392F1800FAA2CE /* VLTransformationServiceVendor.h */,
+				AD52201417392F1800FAA2CE /* VLTransformationServiceVendor.m */,
+				AD52201D173936CD00FAA2CE /* VLCFLMLToDataFileVendor.h */,
+				AD52201E173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m */,
+				AD52202017397B3A00FAA2CE /* VLCFLMLToKineticsVendor.h */,
+				AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */,
+				AD5220231739830800FAA2CE /* VLCFLMLToSTMVendor.h */,
+				AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		AD522016173935D200FAA2CE /* languages */ = {
+			isa = PBXGroup;
+			children = (
+				AD5220171739360500FAA2CE /* VLAbstractLanguageAdaptor.h */,
+				AD5220181739360500FAA2CE /* VLAbstractLanguageAdaptor.m */,
+				AD52201A1739363300FAA2CE /* VLOctaveLanguageAdaptor.h */,
+				AD52201B1739363300FAA2CE /* VLOctaveLanguageAdaptor.m */,
+			);
+			name = languages;
+			sourceTree = "<group>";
+		};
 		AD672D411739040600302515 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +143,10 @@
 		AD672D531739040600302515 /* CFLGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				AD522016173935D200FAA2CE /* languages */,
+				AD672D74173904AD00302515 /* Utilities */,
+				AD52200C17392A0000FAA2CE /* Services */,
+				AD672D6D1739042B00302515 /* Foundation */,
 				AD672D5F1739040700302515 /* VLDocument.h */,
 				AD672D601739040700302515 /* VLDocument.m */,
 				AD672D621739040700302515 /* VLDocument.xib */,
@@ -103,6 +166,30 @@
 				AD672D5C1739040700302515 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AD672D6D1739042B00302515 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				AD672D6E1739046E00302515 /* VLCodeGenerationFoundationServer.h */,
+				AD672D6F1739046E00302515 /* VLCodeGenerationFoundationServer.m */,
+				AD672D711739049400302515 /* VLCodeGenerationOperation.h */,
+				AD672D721739049400302515 /* VLCodeGenerationOperation.m */,
+			);
+			name = Foundation;
+			sourceTree = "<group>";
+		};
+		AD672D74173904AD00302515 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AD52200D17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.h */,
+				AD52200E17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m */,
+				AD672D75173904DE00302515 /* VLBlocksAndConstanStrings.h */,
+				AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */,
+				AD52201017392B9D00FAA2CE /* VLCoreUtilitiesLib.h */,
+				AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +260,17 @@
 			files = (
 				AD672D5A1739040600302515 /* main.m in Sources */,
 				AD672D611739040700302515 /* VLDocument.m in Sources */,
+				AD672D701739046E00302515 /* VLCodeGenerationFoundationServer.m in Sources */,
+				AD672D731739049400302515 /* VLCodeGenerationOperation.m in Sources */,
+				AD672D77173904DE00302515 /* VLBlocksAndConstanStrings.m in Sources */,
+				AD52200F17392B2C00FAA2CE /* MyVarnerlabCoreUtilitiesLib.m in Sources */,
+				AD52201217392B9D00FAA2CE /* VLCoreUtilitiesLib.m in Sources */,
+				AD52201517392F1800FAA2CE /* VLTransformationServiceVendor.m in Sources */,
+				AD5220191739360500FAA2CE /* VLAbstractLanguageAdaptor.m in Sources */,
+				AD52201C1739363300FAA2CE /* VLOctaveLanguageAdaptor.m in Sources */,
+				AD52201F173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m in Sources */,
+				AD52202217397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m in Sources */,
+				AD5220251739830900FAA2CE /* VLCFLMLToSTMVendor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +414,7 @@
 				AD672D6C1739040700302515 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
