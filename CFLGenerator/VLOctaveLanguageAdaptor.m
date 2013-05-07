@@ -31,6 +31,92 @@
 
 
 #pragma mark - method overrides
+-(NSString *)generateSTMBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+    BOOL isReactant = NO;
+    BOOL isProduct = NO;
+    
+    // get the rate array -
+    NSArray *rates_array = [model_tree nodesForXPath:@".//operation" error:nil];
+    NSInteger NUMBER_OF_RATES = [rates_array count];
+    NSInteger rate_conter = 0;
+    
+    // ok, get the species array -
+    NSArray *states_array = [model_tree nodesForXPath:@"//listOfSpecies/species/@symbol" error:nil];
+    for (NSXMLElement *state_node in states_array)
+    {
+        // Get the symbol -
+        NSString *state_symbol = [state_node stringValue];
+        
+        
+        // ok, so go through the rates, does this species appear as a reactant?
+        for (NSXMLElement *rate_node in rates_array)
+        {
+            // reset the flags -
+            isReactant = NO;
+            isProduct = NO;
+            
+            // check the reactants of this node -
+            NSArray *reactants = [rate_node nodesForXPath:@"./listOfReactants/species_reference/@symbol" error:nil];
+            
+            // ok, so do we have a match?
+            for (NSXMLElement *reactant_node in reactants)
+            {
+                NSString *reactant_symbol = [reactant_node stringValue];
+                
+                // r these the same symbol?
+                if ([reactant_symbol isEqualToString:state_symbol]==YES)
+                {
+                    isReactant = YES;
+                    break;
+                }
+            }
+            
+            // check to see if this is a product -
+            NSArray *products = [rate_node nodesForXPath:@"./listOfProducts/species_reference/@symbol" error:nil];
+            
+            // ok, so do we have a match?
+            for (NSXMLElement *product_node in products)
+            {
+                NSString *product_symbol = [product_node stringValue];
+                
+                // r these the same symbol?
+                if ([product_symbol isEqualToString:state_symbol]==YES)
+                {
+                    isProduct = YES;
+                    break;
+                }
+            }
+            
+            // ok - add the correct element to the buffer
+            if (isReactant == YES)
+            {
+                [buffer appendString:@"-1 "];
+            }
+            else if (isProduct == YES)
+            {
+                [buffer appendString:@"1 "];
+            }
+            else if (isReactant == NO && isProduct == NO)
+            {
+                [buffer appendString:@"0 "];
+            }
+        }
+        
+        // new line -
+        [buffer appendString:@"\n"];
+    }
+    
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
+
 -(NSString *)generateDataFileBufferWithOptions:(NSDictionary *)options
 {
     // get the options from the dictionary -
