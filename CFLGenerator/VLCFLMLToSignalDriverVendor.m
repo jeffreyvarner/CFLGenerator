@@ -49,7 +49,7 @@
             kXMLTransformationTree : myBlueprintDocument
         };
         
-        NSString *code_block = [[self myLanguageAdaptor] generateSTMBufferWithOptions:options];
+        NSString *code_block = [[self myLanguageAdaptor] generateSignalDriverBufferWithOptions:options];
         [buffer appendString:code_block];
     };
     

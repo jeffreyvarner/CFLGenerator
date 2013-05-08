@@ -40,7 +40,56 @@
     NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
     
     // ok, so let's calculate system arrays -
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"% Driver.m \n"];
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"% Load the DataFile - \n"];
+    [buffer appendString:@"DF = DataFile(0,0,0,[]);\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"% Get the state vector - \n"];
+    [buffer appendString:@"IC = DF.INITIAL_CONDITION_VECTOR;\n"];
+    [buffer appendString:@"\n"]; 
+    [buffer appendString:@"% Load the network and mapping matrix - \n"];
+    [buffer appendString:@"STM = load('Network.dat');\n"];
+    [buffer appendString:@"MAP = load('Map.dat');\n"];
+    [buffer appendString:@"\n"]; 
+    [buffer appendString:@" % state calculations - \n"];
+    [buffer appendString:@"state_vector = IC;\n"];
+    [buffer appendString:@"OUTPUT_ARR = [];\n"];
+    [buffer appendString:@"for phase_index = 1:2\n"];
+    [buffer appendString:@"\t rV = Kinetics(state_vector,DF);\n"];
+    [buffer appendString:@"\t output_vector = MAP*rV;\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"\t % Sort the state_vector - \n"];
     
+    // grab the outside species -
+    NSArray *outside_state_array = [model_tree nodesForXPath:@"//listOfSpecies/species[@compartment='outside']/@symbol" error:nil];
+    NSInteger NUMBER_OF_OUTSIDE_SPECIES = [outside_state_array count];
+    NSInteger species_counter = 1;
+    for (NSXMLElement *outside_node in outside_state_array)
+    {
+        // build -
+        [buffer appendFormat:@"\t state_vector(%lu,1) = IC(%lu,1);\n",species_counter,species_counter];
+        
+        // update state counter -
+        species_counter = species_counter + 1;
+    }
+    
+    // grab the model species -
+    NSArray *model_state_array = [model_tree nodesForXPath:@"//listOfSpecies/species[@compartment='model']/@symbol" error:nil];
+    species_counter = 1;
+    for (NSXMLElement *model_node in model_state_array)
+    {
+        // build -
+        [buffer appendFormat:@"\t state_vector(%lu,1) = output_vector(%lu,1);\n",(species_counter + NUMBER_OF_OUTSIDE_SPECIES),species_counter];
+        
+        // update state counter -
+        species_counter = species_counter + 1;
+    }
+
+    [buffer appendString:@"\t OUTPUT_ARR = [OUTPUT_ARR state_vector];\n"];
+	[buffer appendString:@"end;\n"];
     
     // return -
     return [NSString stringWithString:buffer];
@@ -52,11 +101,71 @@
     NSMutableString *buffer = [NSMutableString string];
     
     // get the options from the dictionary -
-    NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+    __unused NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
     
     // ok, so let's calculate system arrays -
     
     
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
+-(NSString *)generateMappingMatrixBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+    
+    // get the rate array -
+    NSArray *rates_array = [model_tree nodesForXPath:@".//operation" error:nil];
+    
+    // ok, so let's calculate system arrays -
+    BOOL isProduct = NO;
+    NSArray *states_array = [model_tree nodesForXPath:@"//listOfSpecies/species[@compartment='model']/@symbol" error:nil];
+    for (NSXMLElement *state_node in states_array)
+    {
+        // Get the symbol -
+        NSString *state_symbol = [state_node stringValue];
+        
+        // ok, so go through the rates, does this species appear as a reactant?
+        for (NSXMLElement *rate_node in rates_array)
+        {
+            // reset the flags -
+            isProduct = NO;
+            
+            // check to see if this is a product -
+            NSArray *products = [rate_node nodesForXPath:@"./listOfProducts/species_reference/@symbol" error:nil];
+            
+            // ok, so do we have a match?
+            for (NSXMLElement *product_node in products)
+            {
+                NSString *product_symbol = [product_node stringValue];
+                
+                // r these the same symbol?
+                if ([product_symbol isEqualToString:state_symbol]==YES)
+                {
+                    isProduct = YES;
+                    break;
+                }
+            }
+            
+            // ok - add the correct element to the buffer
+            if (isProduct == YES)
+            {
+                [buffer appendString:@"1 "];
+            }
+            else if (isProduct == NO)
+            {
+                [buffer appendString:@"0 "];
+            }
+        }
+        
+        // new line -
+        [buffer appendString:@"\n"];
+    }
+
     // return -
     return [NSString stringWithString:buffer];
 }
