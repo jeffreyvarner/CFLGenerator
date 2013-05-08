@@ -59,7 +59,13 @@
     [buffer appendString:@"OUTPUT_ARR = [];\n"];
     [buffer appendString:@"for phase_index = 1:2\n"];
     [buffer appendString:@"\t rV = Kinetics(state_vector,DF);\n"];
-    [buffer appendString:@"\t output_vector = MAP*rV;\n"];
+    [buffer appendString:@"\t [NROWS,NCOLS] = size(MAP);\n"];
+    [buffer appendString:@"\t for rate_index = 1:NROWS\n"];
+    [buffer appendString:@"\t\t INDEX_VEC = find(MAP(rate_index,:) == 1);\n"];
+    [buffer appendString:@"\t\t rate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"\t end;\n"];
+	[buffer appendString:@"\n"];
+    [buffer appendString:@"\t output_vector = rate_vector;\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"\t % Sort the state_vector - \n"];
     
@@ -400,10 +406,16 @@
             
              [buffer appendFormat:@"INPUT_%@ = %@",operation_name,local_buffer];
         }
+        else if ([operation_type isEqualToString:@"SINGLE_PRODUCT_INHIBITION"]==YES)
+        {
+            // what are the inouts?
+            NSString *reactant_symbol = [[operation_reactants lastObject] stringValue];
+            [buffer appendFormat:@"INPUT_%@ = 1 - %@;\n",operation_name,reactant_symbol];
+        }
         
         [buffer appendFormat:@"rate_vector(%lu,1) = %@*(%@^%@ + 1)*(INPUT_%@^%@)/(%@^%@ + INPUT_%@^%@);\n",rate_counter,
-         parameter_symbol_scale,parameter_symbol_saturation,parameter_symbol_hill,operation_name,parameter_symbol_hill,parameter_symbol_saturation,
-         parameter_symbol_hill,operation_name,parameter_symbol_hill];
+        parameter_symbol_scale,parameter_symbol_saturation,parameter_symbol_hill,operation_name,parameter_symbol_hill,parameter_symbol_saturation,
+        parameter_symbol_hill,operation_name,parameter_symbol_hill];
      
         // new line -
         [buffer appendString:@"\n"];
