@@ -14,6 +14,9 @@
 		AD52201F173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52201E173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m */; };
 		AD52202217397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */; };
 		AD5220251739830900FAA2CE /* VLCFLMLToSTMVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */; };
+		AD5220281739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220271739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.m */; };
+		AD52202E1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD52202D1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.m */; };
+		AD5220311739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5220301739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m */; };
 		AD672D4E1739040600302515 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD672D4D1739040600302515 /* Cocoa.framework */; };
 		AD672D581739040600302515 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD672D561739040600302515 /* InfoPlist.strings */; };
 		AD672D5A1739040600302515 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D591739040600302515 /* main.m */; };
@@ -41,6 +44,12 @@
 		AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToKineticsVendor.m; sourceTree = "<group>"; };
 		AD5220231739830800FAA2CE /* VLCFLMLToSTMVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToSTMVendor.h; sourceTree = "<group>"; };
 		AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToSTMVendor.m; sourceTree = "<group>"; };
+		AD5220261739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToSystemStructureArraysVendor.h; sourceTree = "<group>"; };
+		AD5220271739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToSystemStructureArraysVendor.m; sourceTree = "<group>"; };
+		AD52202C1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToSignalDriverVendor.h; sourceTree = "<group>"; };
+		AD52202D1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToSignalDriverVendor.m; sourceTree = "<group>"; };
+		AD52202F1739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToMappingMatrixVendor.h; sourceTree = "<group>"; };
+		AD5220301739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToMappingMatrixVendor.m; sourceTree = "<group>"; };
 		AD672D4A1739040600302515 /* CFLGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFLGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD672D4D1739040600302515 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD672D501739040600302515 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -86,6 +95,12 @@
 				AD52202117397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m */,
 				AD5220231739830800FAA2CE /* VLCFLMLToSTMVendor.h */,
 				AD5220241739830900FAA2CE /* VLCFLMLToSTMVendor.m */,
+				AD5220261739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.h */,
+				AD5220271739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.m */,
+				AD52202C1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.h */,
+				AD52202D1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.m */,
+				AD52202F1739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.h */,
+				AD5220301739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -265,6 +280,9 @@
 				AD52201F173936CD00FAA2CE /* VLCFLMLToDataFileVendor.m in Sources */,
 				AD52202217397B3A00FAA2CE /* VLCFLMLToKineticsVendor.m in Sources */,
 				AD5220251739830900FAA2CE /* VLCFLMLToSTMVendor.m in Sources */,
+				AD5220281739A7C100FAA2CE /* VLCFLMLToSystemStructureArraysVendor.m in Sources */,
+				AD52202E1739A93400FAA2CE /* VLCFLMLToSignalDriverVendor.m in Sources */,
+				AD5220311739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,5 +17,8 @@
 -(NSString *)generateDataFileBufferWithOptions:(NSDictionary *)options;
 -(NSString *)generateKineticsBufferWithOptions:(NSDictionary *)options;
 -(NSString *)generateSTMBufferWithOptions:(NSDictionary *)options;
+-(NSString *)generateMappingMatrixBufferWithOptions:(NSDictionary *)options;
+-(NSString *)generateCalculateSystemArraysBufferWithOptions:(NSDictionary *)options;
+-(NSString *)generateSignalDriverBufferWithOptions:(NSDictionary *)options;
 
 @end

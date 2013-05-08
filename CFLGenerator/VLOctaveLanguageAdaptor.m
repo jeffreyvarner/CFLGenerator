@@ -31,6 +31,36 @@
 
 
 #pragma mark - method overrides
+-(NSString *)generateSignalDriverBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+    
+    // ok, so let's calculate system arrays -
+    
+    
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
+-(NSString *)generateCalculateSystemArraysBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+    
+    // ok, so let's calculate system arrays -
+    
+    
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
 -(NSString *)generateSTMBufferWithOptions:(NSDictionary *)options
 {
     // Buffer to build the array -
@@ -43,16 +73,13 @@
     
     // get the rate array -
     NSArray *rates_array = [model_tree nodesForXPath:@".//operation" error:nil];
-    NSInteger NUMBER_OF_RATES = [rates_array count];
-    NSInteger rate_conter = 0;
-    
+       
     // ok, get the species array -
     NSArray *states_array = [model_tree nodesForXPath:@"//listOfSpecies/species/@symbol" error:nil];
     for (NSXMLElement *state_node in states_array)
     {
         // Get the symbol -
         NSString *state_symbol = [state_node stringValue];
-        
         
         // ok, so go through the rates, does this species appear as a reactant?
         for (NSXMLElement *rate_node in rates_array)
