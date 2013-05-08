@@ -31,6 +31,59 @@
 
 
 #pragma mark - method overrides
+-(NSString *)generateSimulationInputBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    __unused NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+
+    [buffer appendString:@"function new_input_vector = SimulationInput(state_vector,time_index,DF)\n"];
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"% SimulationInput.m \n"];
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"% Identity is the default perturbation (update for custom inputs) - \n"];
+    [buffer appendString:@"new_input_vector = state_vector;\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"return;\n"];
+
+    
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
+-(NSString *)generateEvaluateSignalEquationsBufferWithOptions:(NSDictionary *)options
+{
+    // Buffer to build the array -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // get the options from the dictionary -
+    __unused NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
+
+    [buffer appendString:@"function output_vector = EvaluateSignalSystem(state_vector,MAP_MATRIX,DF)\n"];
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"% EvaluateSignalSystem.m \n"];
+    [buffer appendString:@"% --------------------------------------------- %\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"% Evaluate the kinetics - \n"];
+    [buffer appendString:@"rV = Kinetics(state_vector,DF);\n"];
+    [buffer appendString:@"[NROWS,NCOLS] = size(MAP_MATRIX);\n"];
+    [buffer appendString:@"for rate_index = 1:NROWS\n"];
+    [buffer appendString:@"\tINDEX_VEC = find(MAP_MATRIX(rate_index,:) == 1);\n"];
+    [buffer appendString:@"\trate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"end;\n"];
+	[buffer appendString:@"\n"];
+    [buffer appendString:@"% Compute the output vector - \n"];
+    [buffer appendString:@"output_vector = MAP_MATRIX*rV - rate_vector;\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"return;\n"];
+    
+    // return -
+    return [NSString stringWithString:buffer];
+}
+
 -(NSString *)generateSignalDriverBufferWithOptions:(NSDictionary *)options
 {
     // Buffer to build the array -
@@ -44,6 +97,13 @@
     [buffer appendString:@"% Driver.m \n"];
     [buffer appendString:@"% --------------------------------------------- %\n"];
     [buffer appendString:@"\n"];
+    [buffer appendString:@"% Setup the simulation time scale - \n"];
+    [buffer appendString:@"TSTART = 0.0;\n"];
+    [buffer appendString:@"TSTOP = 100;\n"];
+    [buffer appendString:@"Ts = 1;\n"];
+    [buffer appendString:@"TIME_VECTOR = TSTART:Ts:TSTOP;\n"];
+    [buffer appendString:@"NUMBER_OF_STEPS = length(TIME_VECTOR);\n"];
+    [buffer appendString:@"\n"];
     [buffer appendString:@"% Load the DataFile - \n"];
     [buffer appendString:@"DF = DataFile(0,0,0,[]);\n"];
     [buffer appendString:@"\n"];
@@ -56,18 +116,16 @@
     [buffer appendString:@"\n"]; 
     [buffer appendString:@" % state calculations - \n"];
     [buffer appendString:@"state_vector = IC;\n"];
-    [buffer appendString:@"OUTPUT_ARR = [];\n"];
-    [buffer appendString:@"for phase_index = 1:2\n"];
-    [buffer appendString:@"\t rV = Kinetics(state_vector,DF);\n"];
-    [buffer appendString:@"\t [NROWS,NCOLS] = size(MAP);\n"];
-    [buffer appendString:@"\t for rate_index = 1:NROWS\n"];
-    [buffer appendString:@"\t\t INDEX_VEC = find(MAP(rate_index,:) == 1);\n"];
-    [buffer appendString:@"\t\t rate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
-    [buffer appendString:@"\t end;\n"];
-	[buffer appendString:@"\n"];
-    [buffer appendString:@"\t output_vector = rate_vector;\n"];
+    [buffer appendString:@"SIMULATION_ARRAY = [];\n"];
+    [buffer appendString:@"for time_index = 1:NUMBER_OF_STEPS\n"];
     [buffer appendString:@"\n"];
-    [buffer appendString:@"\t % Sort the state_vector - \n"];
+    [buffer appendString:@"\t% calculate the simulation inputs - \n"];
+    [buffer appendString:@"\tperturbed_state_vector = SimulationInput(state_vector,time_index,DF);\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"\t% evaluate the signal system - \n"];
+    [buffer appendString:@"\toutput_vector = EvaluateSignalSystem(perturbed_state_vector,MAP,DF);\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"\t% Sort the state_vector - \n"];
     
     // grab the outside species -
     NSArray *outside_state_array = [model_tree nodesForXPath:@"//listOfSpecies/species[@compartment='outside']/@symbol" error:nil];
@@ -76,7 +134,7 @@
     for (NSXMLElement *outside_node in outside_state_array)
     {
         // build -
-        [buffer appendFormat:@"\t state_vector(%lu,1) = IC(%lu,1);\n",species_counter,species_counter];
+        [buffer appendFormat:@"\tstate_vector(%lu,1) = perturbed_state_vector(%lu,1);\n",species_counter,species_counter];
         
         // update state counter -
         species_counter = species_counter + 1;
@@ -88,13 +146,13 @@
     for (NSXMLElement *model_node in model_state_array)
     {
         // build -
-        [buffer appendFormat:@"\t state_vector(%lu,1) = output_vector(%lu,1);\n",(species_counter + NUMBER_OF_OUTSIDE_SPECIES),species_counter];
+        [buffer appendFormat:@"\tstate_vector(%lu,1) = output_vector(%lu,1);\n",(species_counter + NUMBER_OF_OUTSIDE_SPECIES),species_counter];
         
         // update state counter -
         species_counter = species_counter + 1;
     }
 
-    [buffer appendString:@"\t OUTPUT_ARR = [OUTPUT_ARR state_vector];\n"];
+    [buffer appendString:@"\tSIMULATION_ARRAY = [SIMULATION_ARRAY state_vector];\n"];
 	[buffer appendString:@"end;\n"];
     
     // return -

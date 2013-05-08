@@ -55,4 +55,19 @@
     return @"u_need_2_override_me";
 }
 
+-(NSString *)generateEvaluateSignalEquationsBufferWithOptions:(NSDictionary *)options
+{
+    // force the user to overide -
+    [self doesNotRecognizeSelector:_cmd];
+    return @"u_need_2_override_me";
+}
+
+-(NSString *)generateSimulationInputBufferWithOptions:(NSDictionary *)options
+{
+    // force the user to overide -
+    [self doesNotRecognizeSelector:_cmd];
+    return @"u_need_2_override_me";
+
+}
+
 @end
