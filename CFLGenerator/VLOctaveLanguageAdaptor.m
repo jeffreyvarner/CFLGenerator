@@ -119,9 +119,13 @@
     [buffer appendString:@"[NROWS,NCOLS] = size(MAP_MATRIX);\n"];
     [buffer appendString:@"for rate_index = 1:NROWS\n"];
     [buffer appendString:@"\tINDEX_VEC = find(MAP_MATRIX(rate_index,:) == 1);\n"];
-    [buffer appendString:@"\trate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"\tif (length(INDEX_VEC)==1)\n"];
+    [buffer appendString:@"\t\trate_vector(rate_index,1) = 0;\n"];
+    [buffer appendString:@"\telse\n"];
+    [buffer appendString:@"\t\trate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"\tend;\n"];
     [buffer appendString:@"end;\n"];
-	[buffer appendString:@"\n"];
+    [buffer appendString:@"\n"];
     [buffer appendString:@"% Compute the output vector - \n"];
     [buffer appendString:@"output_vector = MAP_MATRIX*rV - rate_vector;\n"];
     [buffer appendString:@"\n"];
