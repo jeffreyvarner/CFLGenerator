@@ -118,17 +118,31 @@
     [buffer appendString:@"rV = Kinetics(state_vector,DF);\n"];
     [buffer appendString:@"[NROWS,NCOLS] = size(MAP_MATRIX);\n"];
     [buffer appendString:@"for rate_index = 1:NROWS\n"];
-    [buffer appendString:@"\tINDEX_VEC = find(MAP_MATRIX(rate_index,:) == 1);\n"];
-    [buffer appendString:@"\tif (length(INDEX_VEC)==1)\n"];
-    [buffer appendString:@"\t\trate_vector(rate_index,1) = 0;\n"];
+    [buffer appendString:@"\tMAP_MATRIX_ROW = MAP_MATRIX(rate_index,:);\n"];
+    [buffer appendString:@"\tINDEX_NON_ZERO = find(MAP_MATRIX_ROW~=0);\n"];
+    [buffer appendString:@"\tif (~isempty(INDEX_NON_ZERO))\n"];
+    [buffer appendString:@"\t\tINDEX_VEC = find(MAP_MATRIX_ROW == 1);\n"];
+    [buffer appendString:@"\t\tif (length(INDEX_VEC)==1)\n"];
+    [buffer appendString:@"\t\t\trate_vector(rate_index,1) = 0;\n"];
+    [buffer appendString:@"\t\telse\n"];
+    [buffer appendString:@"\t\t\trate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"\t\tend;\n"];
     [buffer appendString:@"\telse\n"];
-    [buffer appendString:@"\t\trate_vector(rate_index,1) = prod(rV(INDEX_VEC,1));\n"];
+    [buffer appendString:@"\t\t\trate_vector(rate_index,1) = 0;\n"];
     [buffer appendString:@"\tend;\n"];
     [buffer appendString:@"end;\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"% Compute the output vector - \n"];
     [buffer appendString:@"output_vector = MAP_MATRIX*rV - rate_vector;\n"];
     [buffer appendString:@"\n"];
+    [buffer appendString:@"% ok, so we need to correct for rows in mapping matrix -\n"];
+    [buffer appendString:@"for rate_index = 1:NROWS\n"];
+    [buffer appendString:@"\tMAP_MATRIX_ROW = MAP_MATRIX(rate_index,:);\n"];
+	[buffer appendString:@"\tINDEX_NON_ZERO = find(MAP_MATRIX_ROW~=0);\n"];
+	[buffer appendString:@"\tif (isempty(INDEX_NON_ZERO))\n"];
+    [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index,1);\n"];
+	[buffer appendString:@"\tend;\n"];
+    [buffer appendString:@"end;\n"];
     [buffer appendString:@"return;\n"];
     
     // return -
