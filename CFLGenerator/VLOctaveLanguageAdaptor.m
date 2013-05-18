@@ -136,11 +136,12 @@
     [buffer appendString:@"output_vector = MAP_MATRIX*rV - rate_vector;\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"% ok, so we need to correct for rows in mapping matrix -\n"];
+    [buffer appendString:@"NUMBER_OF_EXTERNAL_STATES = DF.NUMBER_OF_EXTERNAL_STATES;\n"];
     [buffer appendString:@"for rate_index = 1:NROWS\n"];
     [buffer appendString:@"\tMAP_MATRIX_ROW = MAP_MATRIX(rate_index,:);\n"];
 	[buffer appendString:@"\tINDEX_NON_ZERO = find(MAP_MATRIX_ROW~=0);\n"];
 	[buffer appendString:@"\tif (isempty(INDEX_NON_ZERO))\n"];
-    [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index,1);\n"];
+    [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index + NUMBER_OF_EXTERNAL_STATES,1);\n"];
 	[buffer appendString:@"\tend;\n"];
     [buffer appendString:@"end;\n"];
     [buffer appendString:@"return;\n"];
@@ -655,6 +656,10 @@
     [buffer appendFormat:@"NUMBER_OF_RATES = %ld;\n",[rates count]];
     [buffer appendFormat:@"NUMBER_OF_STATES = %ld;\n",[state_vector count]];
     
+    // how many internal versus external states?
+    NSArray *outside_species = [sbmlTree nodesForXPath:@".//listOfSpecies/species[@compartment='outside']/@symbol" error:nil];
+    [buffer appendFormat:@"NUMBER_OF_EXTERNAL_STATES = %ld;\n",[outside_species count]];
+    
     // return buffer
     return [NSString stringWithString:buffer];
 }
@@ -673,6 +678,7 @@
     [buffer appendString:@"DF.INITIAL_CONDITION_VECTOR = INITIAL_CONDITION_VECTOR;\n"];
     [buffer appendString:@"DF.NUMBER_OF_RATES = NUMBER_OF_RATES;\n"];
     [buffer appendString:@"DF.NUMBER_OF_STATES = NUMBER_OF_STATES;\n"];
+    [buffer appendString:@"DF.NUMBER_OF_EXTERNAL_STATES = NUMBER_OF_EXTERNAL_STATES;\n"];
     [buffer appendString:@"DF.MEASUREMENT_SELECTION_VECTOR = 1:NUMBER_OF_STATES;\n"];
     // close -
     [buffer appendString:@"% ======================================================== %\n"];
@@ -740,26 +746,45 @@
     // Formulate rate constant buffer -
     // open -
     [buffer appendString:@"\n"];
-    [buffer appendString:@"RATE_CONSTANT_VECTOR = [\n"];
+    [buffer appendString:@"RATE_CONSTANT_VECTOR = [\n\n"];
     
-    // rates -
-    NSArray *parameterArray = [sbmlTree nodesForXPath:@".//parameter/@symbol" error:nil];
+    // Get the operation names -
+    NSArray *operationArray = [sbmlTree nodesForXPath:@".//listOfOperations/operation/@name" error:nil];
     NSInteger counter = 0;
-    __unused NSInteger NUMBER_OF_RATES = [parameterArray count];
-    for (NSXMLElement *parameterNode in parameterArray)
+    for (NSXMLElement *name_node in operationArray)
     {
-        // Get id of rate -
-        NSString *parameterID = [parameterNode stringValue];
+        // Get the name -
+        NSString *operation_name = [name_node stringValue];
         
-        // Ok, so I don't have the reaction name -
-        NSString *xpath = [NSString stringWithFormat:@".//parameter[@symbol='%@']/@value",parameterID];
-        NSString *value = [[[sbmlTree nodesForXPath:xpath error:nil] lastObject] stringValue];
-        [buffer appendFormat:@"\t%@\t;\t%% %ld %@\n",value,counter+1,parameterID];
+        // ok, so get the parameters for this operation -
+        NSString *parameter_xpath = [NSString stringWithFormat:@".//operation[@name='%@']/rule/listOfParameters/parameter/@symbol",operation_name];
+        NSArray *parameterArray = [sbmlTree nodesForXPath:parameter_xpath error:nil];
         
-        // update the counter -
-        counter = counter + 1;
+        // what is the operation name?
+        [buffer appendFormat:@"\t%% %@\n",operation_name];
+        
+        __unused NSInteger NUMBER_OF_RATES = [parameterArray count];
+        for (NSXMLElement *parameterNode in parameterArray)
+        {
+            // Get id of rate -
+            NSString *parameterID = [parameterNode stringValue];
+            
+            // Ok, so I don't have the reaction name -
+            NSString *xpath = [NSString stringWithFormat:@".//parameter[@symbol='%@']/@value",parameterID];
+            NSString *value = [[[sbmlTree nodesForXPath:xpath error:nil] lastObject] stringValue];
+            [buffer appendFormat:@"\t%@\t;\t%% %ld %@\n",value,counter+1,parameterID];
+            
+            // update the counter -
+            counter = counter + 1;
+        }
+        
+        // add a new line -
+        [buffer appendString:@"\n"];
     }
     
+    
+    
+        
     // close -
     [buffer appendString:@"];\n"];
     
