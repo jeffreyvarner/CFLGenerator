@@ -561,7 +561,18 @@
             for (NSXMLElement *reactant_node in operation_reactants)
             {
                 NSString *reactant_symbol = [reactant_node stringValue];
-                [local_buffer appendFormat:@"%@",reactant_symbol];
+                
+                // ok, so I need to figure out the proptionality -
+                NSString *prop_xpath = [NSString stringWithFormat:@".//operation[@name='%@']/listOfReactants/species_reference[@symbol='%@']/@proportionality",operation_name,reactant_symbol];
+                NSString *prop_direction = [[[sbmlTree nodesForXPath:prop_xpath error:nil] lastObject] stringValue];
+                if ([prop_direction isEqualToString:@"inverse"]==YES)
+                {
+                    [local_buffer appendFormat:@"(1 - %@)",reactant_symbol];
+                }
+                else
+                {
+                    [local_buffer appendFormat:@"%@",reactant_symbol];
+                }
                 
                 if (reactant_counter == COUNT - 1)
                 {
