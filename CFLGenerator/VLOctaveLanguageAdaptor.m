@@ -144,6 +144,18 @@
     [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index + NUMBER_OF_EXTERNAL_STATES,1);\n"];
 	[buffer appendString:@"\tend;\n"];
     [buffer appendString:@"end;\n"];
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"% Impose a change constraint?\n"];
+    [buffer appendString:@"DELTA = output_vector - state_vector((NUMBER_OF_EXTERNAL_STATES+1):end,1);\n"];
+    [buffer appendString:@"EPSILON_ARRAY = DF.MAXIMUM_OPERATION_CHANGE_ARRAY;\n"];
+    [buffer appendString:@"for rate_index = 1:NROWS\n"];
+    [buffer appendString:@"\tEPSILON = EPSILON_ARRAY(rate_index,1);\n"];
+    [buffer appendString:@"\tif (DELTA(rate_index,1)<-1*EPSILON)\n"];
+    [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index + NUMBER_OF_EXTERNAL_STATES,1) - EPSILON;\n"];
+	[buffer appendString:@"\telseif (DELTA(rate_index,1)>1*EPSILON)\n"];
+    [buffer appendString:@"\t\toutput_vector(rate_index,1) = state_vector(rate_index + NUMBER_OF_EXTERNAL_STATES,1) + EPSILON;\n"];
+	[buffer appendString:@"\tend\n"];
+    [buffer appendString:@"end;\n"];
     [buffer appendString:@"return;\n"];
     
     // return -
@@ -417,10 +429,12 @@
     NSString *header_block = [self buildHeaderBlockFromBlueprintTree:transformation_tree andSBMLTree:model_tree];
     NSString *parameter_block = [self buildRateConstantListFromSBMLTree:model_tree];
     NSString *ic_block = [self buildInitialConditionListFromSBMLTree:model_tree];
+    NSString *epsilon_block = [self buildEpsilonArrayFromSBMLTree:model_tree];
     NSString *footer_block = [self buildFooterBlockFromBlueprintTree:transformation_tree andSBMLTree:model_tree];
     [buffer appendString:header_block];
     [buffer appendString:parameter_block];
     [buffer appendString:ic_block];
+    [buffer appendString:epsilon_block];
     [buffer appendString:footer_block];
     
     // return -
@@ -690,10 +704,55 @@
     [buffer appendString:@"DF.NUMBER_OF_RATES = NUMBER_OF_RATES;\n"];
     [buffer appendString:@"DF.NUMBER_OF_STATES = NUMBER_OF_STATES;\n"];
     [buffer appendString:@"DF.NUMBER_OF_EXTERNAL_STATES = NUMBER_OF_EXTERNAL_STATES;\n"];
+    [buffer appendString:@"DF.MAXIMUM_OPERATION_CHANGE_ARRAY = MAX_CHANGE_ARRAY;\n"];
     [buffer appendString:@"DF.MEASUREMENT_SELECTION_VECTOR = 1:NUMBER_OF_STATES;\n"];
     // close -
     [buffer appendString:@"% ======================================================== %\n"];
     [buffer appendString:@"return;\n"];
+    
+    // return buffer
+    return [NSString stringWithString:buffer];
+}
+
+-(NSString *)buildEpsilonArrayFromSBMLTree:(NSXMLDocument *)sbmlTree
+{
+    // Initialize the buffer -
+    NSMutableString *buffer = [NSMutableString string];
+    
+    // Formulate rate constant buffer -
+    // open -
+    [buffer appendString:@"\n"];
+    [buffer appendString:@"MAX_CHANGE_ARRAY = [\n"];
+    
+    // Get the operation names -
+    NSArray *operationArray = [sbmlTree nodesForXPath:@".//listOfSpecies/species/@symbol" error:nil];
+    NSInteger counter = 0;
+    for (NSXMLElement *name_node in operationArray)
+    {
+        // Get the name -
+        NSString *operation_name = [name_node stringValue];
+        
+        // ok, so get the parameters for this operation -
+        NSString *parameter_xpath = [NSString stringWithFormat:@".//listOfSpecies/species[@symbol='%@']/@maximum_change",operation_name];
+        NSArray *parameterArray = [sbmlTree nodesForXPath:parameter_xpath error:nil];
+        
+        __unused NSInteger NUMBER_OF_RATES = [parameterArray count];
+        for (NSXMLElement *parameterNode in parameterArray)
+        {
+            // Get id of rate -
+            NSString *epsilon_value = [parameterNode stringValue];
+            
+            // Ok, so I don't have the reaction name -
+            [buffer appendFormat:@"\t%@\t;\t%% %ld %@\n",epsilon_value,counter+1,operation_name];
+            
+            // update the counter -
+            counter = counter + 1;
+        }
+    }
+    
+    // close -
+    [buffer appendString:@"];\n"];
+    
     
     // return buffer
     return [NSString stringWithString:buffer];
