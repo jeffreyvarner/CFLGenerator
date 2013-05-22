@@ -24,6 +24,8 @@
 
 -(NSString *)buildRateConstantListFromSBMLTree:(NSXMLDocument *)sbmlTree;
 -(NSString *)buildInitialConditionListFromSBMLTree:(NSXMLDocument *)sbmlTree;
+-(NSString *)buildReactionStringRepresentationForOperationWithName:(NSString *)operatioName
+                                                      fromSBMLTree:(NSXMLDocument *)sbmlTree;
 
 @end
 
@@ -821,6 +823,7 @@
     // Get the operation names -
     NSArray *operationArray = [sbmlTree nodesForXPath:@".//listOfOperations/operation/@name" error:nil];
     NSInteger counter = 0;
+    NSInteger operation_counter = 0;
     for (NSXMLElement *name_node in operationArray)
     {
         // Get the name -
@@ -831,7 +834,11 @@
         NSArray *parameterArray = [sbmlTree nodesForXPath:parameter_xpath error:nil];
         
         // what is the operation name?
-        [buffer appendFormat:@"\t%% %@\n",operation_name];
+        [buffer appendFormat:@"\t%% Operation: %lu %@\n",(operation_counter + 1),operation_name];
+        
+        // ok, so write a schematic of the reaction for debugging -
+        NSString *operation_reaction_string = [self buildReactionStringRepresentationForOperationWithName:operation_name fromSBMLTree:sbmlTree];
+        [buffer appendFormat:@"\t%% %@",operation_reaction_string];
         
         __unused NSInteger NUMBER_OF_RATES = [parameterArray count];
         for (NSXMLElement *parameterNode in parameterArray)
@@ -848,6 +855,9 @@
             counter = counter + 1;
         }
         
+        // update operation counter -
+        operation_counter = operation_counter + 1;
+        
         // add a new line -
         [buffer appendString:@"\n"];
     }
@@ -862,5 +872,69 @@
     return [NSString stringWithString:buffer];
 }
 
+-(NSString *)buildReactionStringRepresentationForOperationWithName:(NSString *)operatioName
+                                                      fromSBMLTree:(NSXMLDocument *)sbmlTree
+{
+    // ok, so I need to get the reactants and products for this reaction (including whether or not they are direct or indirect)
+    
+    // get productions -
+    NSString *products_string = [NSString stringWithFormat:@".//operation[@name='%@']/listOfProducts/species_reference/@symbol",operatioName];
+    NSArray *products_array = [sbmlTree nodesForXPath:products_string error:nil];
+    
+    // get reactants -
+    NSString *reactants_string = [NSString stringWithFormat:@".//operation[@name='%@']/listOfReactants/species_reference/@symbol",operatioName];
+    NSArray *reactants_array = [sbmlTree nodesForXPath:reactants_string error:nil];
+
+    // ok, so let's formulate the string -
+    NSMutableString *buffer = [NSMutableString string];
+    NSInteger counter = 0;
+    NSInteger NUMBER_OF_REACTANTS = [reactants_array count];
+    for (NSXMLElement *reactant_node in reactants_array)
+    {
+        // get the symbol -
+        NSString *reactant_symbol = [reactant_node stringValue];
+        
+        // need to check the proportionality -
+        NSString *xpath_proportionality = [NSString stringWithFormat:@".//operation[@name='%@']/listOfReactants/species_reference[@symbol='%@']/@proportionality",operatioName,reactant_symbol];
+        NSString *direction = [[[sbmlTree nodesForXPath:xpath_proportionality error:nil] lastObject] stringValue];
+        if ([direction isEqualToString:@"direct"] == YES)
+        {
+            [buffer appendString:reactant_symbol];
+        }
+        else if ([direction isEqualToString:@"inverse"] == YES)
+        {
+            NSString *inverse = [NSString stringWithFormat:@"(1 - %@)",reactant_symbol];
+            [buffer appendString:inverse];
+        }
+        
+        if (counter != (NUMBER_OF_REACTANTS - 1))
+        {
+            [buffer appendString:@"*"];
+        }
+        
+        // update the counter -
+        counter = counter + 1;
+    }
+    
+    // arrow -
+    [buffer appendString:@" ---------> "];
+    
+    // process the products -
+    [buffer appendString:@"["];
+    for (NSXMLElement *product_node in products_array)
+    {
+        // get the symbol -
+        NSString *product_symbol = [product_node stringValue];
+
+        // add to buffer -
+        [buffer appendString:product_symbol];
+    }
+    
+    // close -
+    [buffer appendString:@"];\n"];
+    
+    // return buffer
+    return [NSString stringWithString:buffer];
+}
 
 @end
