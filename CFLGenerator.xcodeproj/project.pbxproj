@@ -29,6 +29,8 @@
 		AD672D701739046E00302515 /* VLCodeGenerationFoundationServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D6F1739046E00302515 /* VLCodeGenerationFoundationServer.m */; };
 		AD672D731739049400302515 /* VLCodeGenerationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D721739049400302515 /* VLCodeGenerationOperation.m */; };
 		AD672D77173904DE00302515 /* VLBlocksAndConstanStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */; };
+		ADFBC7A9174D451400D1590B /* VLGraphVizLanguageAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFBC7A8174D451400D1590B /* VLGraphVizLanguageAdaptor.m */; };
+		ADFBC7AC174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFBC7AB174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,10 @@
 		AD672D721739049400302515 /* VLCodeGenerationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCodeGenerationOperation.m; sourceTree = "<group>"; };
 		AD672D75173904DE00302515 /* VLBlocksAndConstanStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLBlocksAndConstanStrings.h; sourceTree = "<group>"; };
 		AD672D76173904DE00302515 /* VLBlocksAndConstanStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLBlocksAndConstanStrings.m; sourceTree = "<group>"; };
+		ADFBC7A7174D451400D1590B /* VLGraphVizLanguageAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLGraphVizLanguageAdaptor.h; sourceTree = "<group>"; };
+		ADFBC7A8174D451400D1590B /* VLGraphVizLanguageAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLGraphVizLanguageAdaptor.m; sourceTree = "<group>"; };
+		ADFBC7AA174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCFLMLToGraphVizDotVendor.h; sourceTree = "<group>"; };
+		ADFBC7AB174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFLMLToGraphVizDotVendor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,8 @@
 				AD522033173A9A1400FAA2CE /* VLCFLMLToEvaluateSignalEquationsVendor.m */,
 				AD522035173AA01000FAA2CE /* VLCFMLToSimulationInputBufferVendor.h */,
 				AD522036173AA01100FAA2CE /* VLCFMLToSimulationInputBufferVendor.m */,
+				ADFBC7AA174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.h */,
+				ADFBC7AB174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -122,6 +130,8 @@
 				AD5220181739360500FAA2CE /* VLAbstractLanguageAdaptor.m */,
 				AD52201A1739363300FAA2CE /* VLOctaveLanguageAdaptor.h */,
 				AD52201B1739363300FAA2CE /* VLOctaveLanguageAdaptor.m */,
+				ADFBC7A7174D451400D1590B /* VLGraphVizLanguageAdaptor.h */,
+				ADFBC7A8174D451400D1590B /* VLGraphVizLanguageAdaptor.m */,
 			);
 			name = languages;
 			sourceTree = "<group>";
@@ -295,6 +305,8 @@
 				AD5220311739D39B00FAA2CE /* VLCFLMLToMappingMatrixVendor.m in Sources */,
 				AD522034173A9A1400FAA2CE /* VLCFLMLToEvaluateSignalEquationsVendor.m in Sources */,
 				AD522037173AA01100FAA2CE /* VLCFMLToSimulationInputBufferVendor.m in Sources */,
+				ADFBC7A9174D451400D1590B /* VLGraphVizLanguageAdaptor.m in Sources */,
+				ADFBC7AC174D47E600D1590B /* VLCFLMLToGraphVizDotVendor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

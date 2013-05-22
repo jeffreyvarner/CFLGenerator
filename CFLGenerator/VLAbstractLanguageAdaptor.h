@@ -22,5 +22,6 @@
 -(NSString *)generateSignalDriverBufferWithOptions:(NSDictionary *)options;
 -(NSString *)generateEvaluateSignalEquationsBufferWithOptions:(NSDictionary *)options;
 -(NSString *)generateSimulationInputBufferWithOptions:(NSDictionary *)options;
+-(NSString *)generateGraphvizNetworkVisualizationBufferWithOptions:(NSDictionary *)options;
 
 @end
