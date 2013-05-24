@@ -173,6 +173,7 @@
     NSXMLDocument *model_tree = [options objectForKey:kXMLModelTree];
     
     // ok, so let's calculate system arrays -
+    [buffer appendString:@"function [TIME_VECTOR,SIMULATION_ARRAY] = Driver(TSTART,TSTOP,Ts,DFIN)\n"];
     [buffer appendString:@"% ------------------------------------------------------------------------------------- %\n"];
     [buffer appendString:@"% Copyright (c) 2013 Varnerlab,\n"];
     [buffer appendString:@"% School of Chemical and Biomolecular Engineering,\n"];
@@ -201,14 +202,15 @@
     [buffer appendString:@"% ------------------------------------------------------------------------------------- %\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"% Setup the simulation time scale - \n"];
-    [buffer appendString:@"TSTART = 0.0;\n"];
-    [buffer appendString:@"TSTOP = 100;\n"];
-    [buffer appendString:@"Ts = 1;\n"];
     [buffer appendString:@"TIME_VECTOR = TSTART:Ts:TSTOP;\n"];
     [buffer appendString:@"NUMBER_OF_STEPS = length(TIME_VECTOR);\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"% Load the DataFile - \n"];
-    [buffer appendString:@"DF = DataFile(0,0,0,[]);\n"];
+    [buffer appendString:@"if (isempty(DFIN))\n"];
+    [buffer appendString:@"\tDF = DataFile(TSTART,TSTOP,Ts,[]);\n"];
+    [buffer appendString:@"else\n"];
+    [buffer appendString:@"\tDF = DFIN;\n"];
+    [buffer appendString:@"end;\n"];
     [buffer appendString:@"\n"];
     [buffer appendString:@"% Get the state vector - \n"];
     [buffer appendString:@"IC = DF.INITIAL_CONDITION_VECTOR;\n"];
@@ -257,6 +259,7 @@
 
     [buffer appendString:@"\tSIMULATION_ARRAY = [SIMULATION_ARRAY state_vector];\n"];
 	[buffer appendString:@"end;\n"];
+    [buffer appendString:@"return;\n"];
     
     // return -
     return [NSString stringWithString:buffer];

@@ -41,7 +41,7 @@
     // Create a buffer for the dot file and return -
     NSMutableString *buffer = [NSMutableString string];
     [buffer appendString:@"digraph G {\n"];
-    [buffer appendString:@"\tsize=\"10,10\";\n"];
+    [buffer appendString:@"\tsize=\"7.5,10\";\n"];
     [buffer appendString:@"\tratio=fill;\n"];
     [buffer appendString:@"\tnode[color=dimgray,fontcolor=white,style=filled,shape=house];\n"];
     
