@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C5325B91-FB79-4E96-B714-256718F10211</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CFLGenerator</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1F8F6CA1-80F3-4DFB-9228-CE7CD0125738</key>
+		<string>https://github.com/jeffreyvarner/CFLGenerator.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CFLGenerator.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1F8F6CA1-80F3-4DFB-9228-CE7CD0125738</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jeffreyvarner/CFLGenerator.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1F8F6CA1-80F3-4DFB-9228-CE7CD0125738</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1F8F6CA1-80F3-4DFB-9228-CE7CD0125738</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CFLGenerator_v1</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -141,41 +141,59 @@
         // Load the blueprint file -
         NSXMLDocument *blueprintTree = [VLCoreUtilitiesLib createXMLDocumentFromFile:localBlueprintURL];
         
-        // Get the transformation xml blocks -
-        NSArray *transformBlockNames = [VLCoreUtilitiesLib executeXPathQuery:@"//Transformation/@name"
-                                                                          withXMLTree:blueprintTree];
-        
-        // Process the transformations -
-        for (NSXMLElement *node in transformBlockNames)
+        // do we have a blueprint tree?
+        if (blueprintTree != nil)
         {
-            // Get the name of this transformation -
-            NSString *transformationName = [node stringValue];
+            // Get the transformation xml blocks -
+            NSArray *transformBlockNames = [VLCoreUtilitiesLib executeXPathQuery:@"//Transformation/@name"
+                                                                     withXMLTree:blueprintTree];
+            // Process the transformations -
+            for (NSXMLElement *node in transformBlockNames)
+            {
+                // Get the name of this transformation -
+                NSString *transformationName = [node stringValue];
+                
+                // update the progress text label -
+                NSString *progressText = [NSString stringWithFormat:@"Status: Loaded %@ block",transformationName];
+                [[self myProgressUpdateTextField] setStringValue:progressText];
+                
+                // Get the input and output classname -
+                NSString *inputClassNameXPath = [NSString stringWithFormat:@"//Transformation[@name='%@']/@classname",transformationName];
+                NSString *languageXPath = [NSString stringWithFormat:@"//Transformation[@name='%@']/@language",transformationName];
+                
+                // execute the query -
+                NSString *inputClassName = [[[VLCoreUtilitiesLib executeXPathQuery:inputClassNameXPath
+                                                                       withXMLTree:blueprintTree] lastObject] stringValue];
+                
+                NSString *languageClassName = [[[VLCoreUtilitiesLib executeXPathQuery:languageXPath
+                                                                          withXMLTree:blueprintTree] lastObject] stringValue];
+                
+                // Build the input and output handlers -
+                VLTransformationServiceVendor *vendor = [[NSClassFromString(inputClassName) alloc] init];
+                VLAbstractLanguageAdaptor *language = [[NSClassFromString(languageClassName) alloc] init];
+                
+                // set the blueprint tree -
+                [vendor setMyBlueprintTree:blueprintTree];
+                [vendor setMyLanguageAdaptor:language];
+                
+                // execute the transformations -
+                [vendor startTransformationWithName:transformationName];
+            }
+        }
+        else
+        {
+            // stop progress bar
+            [[self myProgressIndicator] stopAnimation:nil];
+
+            // ok, we don't have a blueprint file ... through up a error view
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"Try again"];
+            [alert setMessageText:@"Ooops! Are you sure you want to load this transformation file?"];
+            [alert setInformativeText:@"This file does not appear to be the correct format."];
+            [alert setAlertStyle:NSCriticalAlertStyle];
             
-            // update the progress text label -
-            NSString *progressText = [NSString stringWithFormat:@"Status: Loaded %@ block",transformationName];
-            [[self myProgressUpdateTextField] setStringValue:progressText];
-            
-            // Get the input and output classname -
-            NSString *inputClassNameXPath = [NSString stringWithFormat:@"//Transformation[@name='%@']/@classname",transformationName];
-            NSString *languageXPath = [NSString stringWithFormat:@"//Transformation[@name='%@']/@language",transformationName];
-            
-            // execute the query -
-            NSString *inputClassName = [[[VLCoreUtilitiesLib executeXPathQuery:inputClassNameXPath
-                                                                            withXMLTree:blueprintTree] lastObject] stringValue];
-            
-            NSString *languageClassName = [[[VLCoreUtilitiesLib executeXPathQuery:languageXPath
-                                                                   withXMLTree:blueprintTree] lastObject] stringValue];
-            
-            // Build the input and output handlers -
-            VLTransformationServiceVendor *vendor = [[NSClassFromString(inputClassName) alloc] init];
-            VLAbstractLanguageAdaptor *language = [[NSClassFromString(languageClassName) alloc] init];
-            
-            // set the blueprint tree -
-            [vendor setMyBlueprintTree:blueprintTree];
-            [vendor setMyLanguageAdaptor:language];
-            
-            // execute the transformations -
-            [vendor startTransformationWithName:transformationName];
+            [alert beginSheetModalForWindow:[[self myWindowController] window]
+                              modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:nil];
         }
     }
     else
@@ -225,6 +243,21 @@
                           }
                           
                       }];
+}
+
+#pragma mark - delegate
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == NSAlertFirstButtonReturn) {
+    
+        // stop progress bar 
+        [[self myProgressIndicator] stopAnimation:nil];
+        
+        // KIA my blueprint file URL -
+        self.myBlueprintFileURL = nil;
+        
+        // clean the text fld -
+        [[self myBlueprintFileTextField] setStringValue:@""];
+    }
 }
 
 #pragma mark - private lifecycle methods

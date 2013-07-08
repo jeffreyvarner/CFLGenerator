@@ -175,6 +175,7 @@
 		AD672D531739040600302515 /* CFLGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				ADCE5670178B4C3B004C3D76 /* windows */,
 				AD522016173935D200FAA2CE /* languages */,
 				AD672D74173904AD00302515 /* Utilities */,
 				AD52200C17392A0000FAA2CE /* Services */,
@@ -220,6 +221,21 @@
 				AD52201117392B9D00FAA2CE /* VLCoreUtilitiesLib.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		ADCE5670178B4C3B004C3D76 /* windows */ = {
+			isa = PBXGroup;
+			children = (
+				ADCE5671178B4C46004C3D76 /* error_window */,
+			);
+			name = windows;
+			sourceTree = "<group>";
+		};
+		ADCE5671178B4C46004C3D76 /* error_window */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = error_window;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
